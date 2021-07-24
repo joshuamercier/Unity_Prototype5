@@ -17,8 +17,10 @@ public class GameManager : MonoBehaviour
     public GameObject titleScreen;
     public AudioSource backgroundMusic;
     public Slider volumeSlider;
+    public GameObject pauseScreen;
 
     public int lives = 3;
+    public bool isGamePaused;
 
     private int score = 0;
     private float spawnRate = 1.0f;
@@ -31,7 +33,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ChangePause();
+        }
     }
 
     IEnumerator SpawnTarget()
@@ -81,4 +86,20 @@ public class GameManager : MonoBehaviour
     {
         backgroundMusic.volume = volumeSlider.value;
     }
+
+    private void ChangePause()
+    {
+        if (!isGamePaused)
+        {
+            isGamePaused = true;
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            isGamePaused = false;
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1;
+        }
+    } 
 }
